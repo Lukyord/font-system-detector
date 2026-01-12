@@ -132,26 +132,72 @@ h1 {
     color: #333;
 }
 
-.font-combinations {
+.font-sizes {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
     margin-left: 8px;
 }
 
-.font-combination {
-    font-size: 14px;
-    color: #666;
+.font-size-group {
+    margin-left: 8px;
+}
+
+.font-size-header-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    min-height: 24px;
+}
+
+.font-size-header {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
     font-family: "Courier New", monospace;
-    padding: 4px 8px;
+}
+
+.line-height-display {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1976d2;
+    background-color: #e3f2fd;
+    padding: 2px 10px;
+    border-radius: 4px;
+    border-left: 3px solid #2196f3;
+    font-family: "Courier New", monospace;
+}
+
+.font-weights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.font-weight-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    background-color: white;
+    outline: 1px solid #ddd;
     border-radius: 4px;
     transition: all 0.2s ease;
     cursor: default;
+    font-family: "Courier New", monospace;
 }
 
-.font-combination.highlighted {
+.font-weight-badge:hover {
+    background-color: #f5f5f5;
+    border-color: #bbb;
+}
+
+.font-weight-badge.highlighted {
     background-color: #fff3cd;
     color: #856404;
     outline: 2px solid #ffc107;
-    box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3);
+    /* box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3); */
 }

@@ -4,7 +4,47 @@
     let mouseOutListener = null;
     let documentMouseLeaveListener = null;
     let debounceTimer = null;
+    let currentlyHighlightedElement = null;
     const DEBOUNCE_DELAY = 100; // ms
+
+    // Helper function to check if extension context is still valid
+    function isExtensionContextValid() {
+        try {
+            // Try to access chrome.runtime.id - if context is invalid, this will throw
+            return chrome.runtime && chrome.runtime.id !== undefined;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Helper function to safely send messages
+    function safeSendMessage(message, callback) {
+        if (!isExtensionContextValid()) {
+            // Context invalidated - stop all listeners
+            stopHoverDetection();
+            return;
+        }
+
+        try {
+            chrome.runtime.sendMessage(message, (response) => {
+                if (chrome.runtime.lastError) {
+                    // Check if error is due to invalid context
+                    if (chrome.runtime.lastError.message.includes("Extension context invalidated")) {
+                        stopHoverDetection();
+                        return;
+                    }
+                }
+                if (callback) {
+                    callback(response);
+                }
+            });
+        } catch (e) {
+            // Context was invalidated during the call
+            if (e.message && e.message.includes("Extension context invalidated")) {
+                stopHoverDetection();
+            }
+        }
+    }
 
     function getFontProperties(element) {
         const computedStyle = window.getComputedStyle(element);
@@ -24,41 +64,65 @@
         };
     }
 
+    function highlightElement(element) {
+        // Remove highlight from previous element
+        if (currentlyHighlightedElement && currentlyHighlightedElement !== element) {
+            removeHighlight(currentlyHighlightedElement);
+        }
+
+        // Add highlight to current element
+        if (element && element !== currentlyHighlightedElement) {
+            element.style.outline = "2px solid #4285f4";
+            element.style.outlineOffset = "2px";
+            element.style.boxShadow = "0 0 0 2px rgba(66, 133, 244, 0.3)";
+            currentlyHighlightedElement = element;
+        }
+    }
+
+    function removeHighlight(element) {
+        if (element) {
+            element.style.outline = "";
+            element.style.outlineOffset = "";
+            element.style.boxShadow = "";
+        }
+        if (element === currentlyHighlightedElement) {
+            currentlyHighlightedElement = null;
+        }
+    }
+
+    function clearAllHighlights() {
+        if (currentlyHighlightedElement) {
+            removeHighlight(currentlyHighlightedElement);
+        }
+    }
+
     function startHoverDetection() {
         if (hoverListener) {
             return; // Already started
         }
 
         mouseOutListener = (e) => {
+            // Remove highlight when mouse leaves the element
+            if (e.target === currentlyHighlightedElement) {
+                removeHighlight(e.target);
+            }
+
             // Check if mouse left the document (no relatedTarget means it left the window)
             if (!e.relatedTarget || (e.relatedTarget === document.body && e.target === document.documentElement)) {
                 // Mouse left the page
-                chrome.runtime.sendMessage(
-                    {
-                        type: "MOUSE_LEFT_PAGE",
-                    },
-                    () => {
-                        // Ignore errors
-                        if (chrome.runtime.lastError) {
-                            // Silently fail
-                        }
-                    }
-                );
+                clearAllHighlights();
+                safeSendMessage({
+                    type: "MOUSE_LEFT_PAGE",
+                });
             }
         };
 
         // Also listen for mouseleave on document
         documentMouseLeaveListener = () => {
-            chrome.runtime.sendMessage(
-                {
-                    type: "MOUSE_LEFT_PAGE",
-                },
-                () => {
-                    if (chrome.runtime.lastError) {
-                        // Silently fail
-                    }
-                }
-            );
+            clearAllHighlights();
+            safeSendMessage({
+                type: "MOUSE_LEFT_PAGE",
+            });
         };
 
         hoverListener = (e) => {
@@ -69,19 +133,13 @@
 
             debounceTimer = setTimeout(() => {
                 const fontProps = getFontProperties(e.target);
+                // Highlight the element on the page
+                highlightElement(e.target);
                 // Send message to sidepanel
-                chrome.runtime.sendMessage(
-                    {
-                        type: "FONT_HOVER",
-                        font: fontProps,
-                    },
-                    () => {
-                        // Ignore errors (e.g., if sidepanel is closed)
-                        if (chrome.runtime.lastError) {
-                            // Silently fail
-                        }
-                    }
-                );
+                safeSendMessage({
+                    type: "FONT_HOVER",
+                    font: fontProps,
+                });
             }, DEBOUNCE_DELAY);
         };
 
@@ -107,17 +165,38 @@
             clearTimeout(debounceTimer);
             debounceTimer = null;
         }
+        // Clear any remaining highlights
+        clearAllHighlights();
     }
 
     // Listen for messages from sidepanel
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-        if (message.type === "START_HOVER_DETECTION") {
-            startHoverDetection();
-            sendResponse({ success: true });
-        } else if (message.type === "STOP_HOVER_DETECTION") {
-            stopHoverDetection();
-            sendResponse({ success: true });
-        }
-        return true; // Keep channel open for async response
-    });
+    try {
+        chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+            // Check if context is still valid before processing
+            if (!isExtensionContextValid()) {
+                stopHoverDetection();
+                return false;
+            }
+
+            try {
+                if (message.type === "START_HOVER_DETECTION") {
+                    startHoverDetection();
+                    sendResponse({ success: true });
+                } else if (message.type === "STOP_HOVER_DETECTION") {
+                    stopHoverDetection();
+                    sendResponse({ success: true });
+                }
+                return true; // Keep channel open for async response
+            } catch (e) {
+                // Context invalidated during processing
+                if (e.message && e.message.includes("Extension context invalidated")) {
+                    stopHoverDetection();
+                }
+                return false;
+            }
+        });
+    } catch (e) {
+        // Context already invalidated when trying to add listener
+        // This is fine - the content script will just not receive messages
+    }
 })();
