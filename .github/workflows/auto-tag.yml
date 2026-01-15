@@ -72,6 +72,12 @@ jobs:
                     echo "exists=false" >> $GITHUB_OUTPUT
                   fi
 
+            - name: Configure git
+              if: steps.check_tag.outputs.exists == 'false' && steps.version.outputs.skip != 'true'
+              run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+
             - name: Create tag and release
               if: steps.check_tag.outputs.exists == 'false' && steps.version.outputs.skip != 'true'
               run: |
