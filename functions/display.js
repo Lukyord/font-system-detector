@@ -32,7 +32,10 @@ export function displayFonts(fonts, loadingEl, resultsEl) {
     // Sort families alphabetically
     const sortedFamilies = Array.from(fontsByFamily.keys()).sort((a, b) => a.localeCompare(b));
 
-    let html = '<div class="font-list">';
+    let html = "";
+    html += `<div class="result-ttl"><h2 class="size-h3 weight-semibold">Results</h2></div>`;
+    html += `<div class="result-subttl"><h3 class="size-body">${fonts.length} fonts found</h3></div>`;
+    html += `<div class="font-list">`;
     sortedFamilies.forEach((family) => {
         const familyMap = fontsByFamily.get(family);
         html += `<div class="font-group">`;

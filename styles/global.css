@@ -1,0 +1,222 @@
+:root {
+    --color-black: #000000;
+    --color-black-rgb: 0, 0, 0;
+    --color-filter-black: brightness(0);
+
+    --color-white: #ffffff;
+    --color-white-rgb: 255, 255, 255;
+    --color-filter-white: brightness(0) invert(1);
+
+    --color-bg-gray: #fafafa;
+    --color-bg-gray-rgb: 250, 250, 250;
+
+    /* TEXT */
+    --color-text-dark: #333333;
+    --color-text-dark-rgb: 51, 51, 51;
+    --color-text-medium: #555555;
+    --color-text-medium-rgb: 85, 85, 85;
+    --color-text-light: #666666;
+    --color-text-light-rgb: 102, 102, 102;
+    --color-text-lighter: #999999;
+    --color-text-lighter-rgb: 153, 153, 153;
+
+    /* BORDER */
+    --color-border-light: #e0e0e0;
+    --color-border-light-rgb: 224, 224, 224;
+    --color-border-medium: #dddddd;
+    --color-border-medium-rgb: 221, 221, 221;
+    --color-border-medium-dark: #bbbbbb;
+    --color-border-medium-dark-rgb: 187, 187, 187;
+
+    /* BACKGROUND */
+    --color-bg-light: #f0f0f0;
+    --color-bg-light-rgb: 240, 240, 240;
+    --color-bg-lighter: #f5f5f5;
+    --color-bg-lighter-rgb: 245, 245, 245;
+    --color-bg-light-gray: #cccccc;
+    --color-bg-light-gray-rgb: 204, 204, 204;
+
+    /* BLUE */
+    --color-blue-primary: #4285f4;
+    --color-blue-primary-rgb: 66, 133, 244;
+    --color-blue-hover: #357ae8;
+    --color-blue-hover-rgb: 53, 122, 232;
+    --color-blue-active: #2d6cdb;
+    --color-blue-active-rgb: 45, 108, 219;
+    --color-blue-accent: #1976d2;
+    --color-blue-accent-rgb: 25, 118, 210;
+    --color-blue-border: #2196f3;
+    --color-blue-border-rgb: 33, 150, 243;
+    --color-blue-light: #e3f2fd;
+    --color-blue-light-rgb: 227, 242, 253;
+
+    /* GREEN */
+    --color-green-primary: #4caf50;
+    --color-green-primary-rgb: 76, 175, 80;
+    --color-green-hover: #45a049;
+    --color-green-hover-rgb: 69, 160, 73;
+
+    /* RED */
+    --color-red-bg: #ffeeee;
+    --color-red-bg-rgb: 255, 238, 238;
+    --color-red-text: #cc3333;
+    --color-red-text-rgb: 204, 51, 51;
+
+    /* YELLOW */
+    --color-yellow-bg: #fff3cd;
+    --color-yellow-bg-rgb: 255, 243, 205;
+    --color-yellow-text: #856404;
+    --color-yellow-text-rgb: 133, 100, 4;
+    --color-yellow-border: #ffc107;
+    --color-yellow-border-rgb: 255, 193, 7;
+
+    /* SHADOW */
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-shadow-rgb: 0, 0, 0, 0.1;
+
+    --font-size-h1: 3.6rem;
+    --font-size-h2: 3rem;
+    --font-size-h3: 2.4rem;
+    --font-size-h4: 2rem;
+    --font-size-h5: 1.8rem;
+    --font-size-h6: 1.6rem;
+    --font-size-body: 1.4rem;
+    --font-size-small: 1.2rem;
+    --font-size-tiny: 1rem;
+
+    --line-height-h1: 1.2;
+    --line-height-h2: 1.2;
+    --line-height-h3: 1.2;
+    --line-height-h4: 1.2;
+    --line-height-h5: 1.2;
+    --line-height-h6: 1.2;
+    --line-height-body: 1.2;
+    --line-height-small: 1.2;
+    --line-height-tiny: 1.2;
+
+    --spacing-8xl: 16rem;
+    --spacing-7xl: 14rem;
+    --spacing-6xl: 12rem;
+    --spacing-5xl: 10rem;
+    --spacing-4xl: 8rem;
+    --spacing-3xl: 7.2rem;
+    --spacing-2xl: 6.4rem;
+    --spacing-xl: 6rem;
+    --spacing-4lg: 5.6rem;
+    --spacing-3lg: 5rem;
+    --spacing-2lg: 4.8rem;
+    --spacing-lg: 4rem;
+    --spacing-2md: 3.6rem;
+    --spacing-md: 3rem;
+    --spacing-2sm: 2.4rem;
+    --spacing-sm: 2rem;
+    --spacing-xs: 1.6rem;
+    --spacing-2xs: 1.2rem;
+    --spacing-3xs: 1rem;
+    --spacing-4xs: 0.8rem;
+    --spacing-5xs: 0.6rem;
+    --spacing-6xs: 0.4rem;
+    --spacing-7xs: 0.2rem;
+
+    --radius-2xs: 0.4rem;
+    --radius-xs: 0.6rem;
+    --radius-sm: 0.8rem;
+    --duration: 0.3s;
+    --duration-x2: 0.5s;
+    --duration-x3: 1s;
+    --duration-x4: 1.5s;
+    --timing-function: ease-in-out;
+}
+
+/* GENERAL ========================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--color-bg-gray);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+/* TYPOGRAPHY ========================================================== */
+.size-h1 {
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
+}
+.size-h2 {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+}
+.size-h3 {
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
+}
+.size-h4 {
+    font-size: var(--font-size-h4);
+    line-height: var(--line-height-h4);
+}
+.size-h5 {
+    font-size: var(--font-size-h5);
+    line-height: var(--line-height-h5);
+}
+.size-h6 {
+    font-size: var(--font-size-h6);
+    line-height: var(--line-height-h6);
+}
+.size-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+}
+.size-small {
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+}
+.size-tiny {
+    font-size: var(--font-size-tiny);
+    line-height: var(--line-height-tiny);
+}
+
+.weight-bold {
+    font-weight: 700;
+}
+.weight-semibold {
+    font-weight: 600;
+}
+.weight-medium {
+    font-weight: 500;
+}
+.weight-regular {
+    font-weight: 400;
+}
+.weight-light {
+    font-weight: 300;
+}
+.weight-thin {
+    font-weight: 200;
+}
+.weight-extra-light {
+    font-weight: 100;
+}

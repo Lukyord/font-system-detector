@@ -33,8 +33,19 @@ function resetHoverMode() {
     clearHighlights();
 }
 
+function setupAccordion() {
+    const fontHeaders = resultsEl.querySelectorAll(".font-family-header");
+    fontHeaders.forEach((header) => {
+        header.addEventListener("click", () => {
+            const fontGroup = header.closest(".font-group");
+            fontGroup.classList.toggle("collapsed");
+        });
+    });
+}
+
 function onScanSuccess(tabId, fonts) {
     displayFonts(fonts, loadingEl, resultsEl);
+    setupAccordion();
     injectHoverDetection(tabId, loadingEl, errorEl);
     state.currentTabIdForHover = tabId;
     hoverToggleButton.disabled = false;
