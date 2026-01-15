@@ -1,4 +1,4 @@
-# Font Detector
+# Font System Detector
 
 A Chrome browser extension that detects and displays all font combinations found on web pages. The extension provides both scanning and interactive hover modes to help developers and designers identify fonts used on any webpage.
 

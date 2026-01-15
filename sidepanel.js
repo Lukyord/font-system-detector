@@ -5,6 +5,7 @@ import { injectHoverDetection, startHoverDetection, stopHoverDetection } from ".
 import { scanFonts as executeScanFonts } from "./functions/scanning.js";
 import { updateCurrentTab } from "./functions/tabs.js";
 import { displayFonts } from "./functions/display.js";
+import { checkGoogleFonts } from "./functions/api.js";
 
 // DOM element references
 const scanButton = document.getElementById("scanButton");
@@ -46,8 +47,9 @@ function setupAccordion() {
     });
 }
 
-function onScanSuccess(tabId, fonts) {
-    displayFonts(fonts, loadingEl, resultsEl);
+async function onScanSuccess(tabId, fonts) {
+    const googleFontsMap = await checkGoogleFonts(fonts);
+    displayFonts(fonts, loadingEl, resultsEl, googleFontsMap);
     setupAccordion();
     injectHoverDetection(tabId, loadingEl, errorEl);
     state.currentTabIdForHover = tabId;

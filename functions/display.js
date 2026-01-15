@@ -1,4 +1,4 @@
-export function displayFonts(fonts, loadingEl, resultsEl) {
+export function displayFonts(fonts, loadingEl, resultsEl, googleFontsMap = null) {
     loadingEl.style.display = "none";
 
     if (fonts.length === 0) {
@@ -38,8 +38,20 @@ export function displayFonts(fonts, loadingEl, resultsEl) {
     html += `<div class="font-list">`;
     sortedFamilies.forEach((family) => {
         const familyMap = fontsByFamily.get(family);
+        const googleFontInfo = googleFontsMap?.get(family);
+        const isGoogleFont = googleFontInfo?.found || false;
+        const googleFontLink = googleFontInfo?.link || null;
+
         html += `<div class="font-group">`;
-        html += `<div class="font-family-header">[${family}]</div>`;
+        html += `<div class="font-family-header">`;
+        html += `<div class="font-family-name"><span class="font-family-name-text">[${family}]</span>`;
+        html += `<div class="font-family-header-right">`;
+        if (isGoogleFont && googleFontLink) {
+            html += `<a href="${googleFontLink}" target="_blank" rel="noopener noreferrer" class="google-font-badge" title="View on Google Fonts">&nbsp;</a>`;
+        }
+        html += `</div>`;
+        html += `</div>`;
+        html += `</div>`;
         html += `<div class="font-sizes">`;
 
         // Sort sizes numerically
