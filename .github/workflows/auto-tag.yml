@@ -28,12 +28,12 @@ jobs:
             - name: Calculate next version
               id: version
               run: |
-                  LAST_TAG="${{ steps.last_tag.outputs.last_tag }}"
-                  LAST_TAG=${LAST_TAG#v}
+                  LAST_TAG_FULL="${{ steps.last_tag.outputs.last_tag }}"
+                  LAST_TAG=${LAST_TAG_FULL#v}
 
                   IFS='.' read -r MAJOR MINOR PATCH <<< "$LAST_TAG"
 
-                  COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s" 2>/dev/null | grep -v "^chore(release):" || true)
+                  COMMITS=$(git log ${LAST_TAG_FULL}..HEAD --pretty=format:"%s" 2>/dev/null | grep -v "^chore(release):" || true)
 
                   if [ -z "$COMMITS" ]; then
                     echo "No new commits since last tag, skipping"
