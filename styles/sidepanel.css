@@ -1,4 +1,5 @@
 /* SIDEPANEL ========================================================== */
+/* CONTAINER */
 .result-subttl {
     color: var(--color-text-lighter);
     margin-bottom: var(--spacing-3xs);
@@ -13,6 +14,27 @@
     }
 }
 
+.loading {
+    text-align: center;
+    padding: var(--spacing-lg) var(--spacing-sm);
+    color: var(--color-text-light);
+}
+
+.error {
+    padding: var(--spacing-sm);
+    background-color: var(--color-red-bg);
+    color: var(--color-red-text);
+    border-radius: var(--radius-xs);
+    margin-bottom: var(--spacing-3xs);
+}
+
+.no-results {
+    text-align: center;
+    padding: var(--spacing-lg) var(--spacing-sm);
+    color: var(--color-text-lighter);
+}
+
+/* BUTTONS */
 [class*="-button"] {
     width: 100%;
     padding: var(--spacing-4xs) var(--spacing-xs);
@@ -80,26 +102,7 @@
     border-color: var(--color-green-hover);
 }
 
-.loading {
-    text-align: center;
-    padding: var(--spacing-lg) var(--spacing-sm);
-    color: var(--color-text-light);
-}
-
-.error {
-    padding: var(--spacing-sm);
-    background-color: var(--color-red-bg);
-    color: var(--color-red-text);
-    border-radius: var(--radius-xs);
-    margin-bottom: var(--spacing-3xs);
-}
-
-.no-results {
-    text-align: center;
-    padding: var(--spacing-lg) var(--spacing-sm);
-    color: var(--color-text-lighter);
-}
-
+/* FONT LIST */
 .font-list {
     display: flex;
     flex-direction: column;
@@ -138,25 +141,38 @@
     color: var(--color-blue-accent);
 }
 
-.google-font-badge {
+[class*="-font-badge"] {
     display: block;
     width: 2.4rem;
     height: 2.4rem;
-    border-radius: 50%;
+    border-radius: 0.5rem;
     overflow: hidden;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(../assets/media/google-fonts-logo.svg);
     border: 0.2rem solid var(--color-border-light);
     box-shadow: 0 0.1rem 0.1rem 0.1rem var(--color-shadow);
     flex-shrink: 0;
     transition: background-color 0.1s var(--timing-function);
 }
 
-.google-font-badge:hover {
+[class*="-font-badge"]:hover {
     background-color: var(--color-text-lighter);
     border-color: var(--color-text-lighter);
+}
+
+.google-font-badge {
+    background-image: url(../assets/media/google-fonts-logo.svg);
+}
+
+.adobe-font-badge {
+    background-image: url(../assets/media/adobe-fonts-logo.webp);
+}
+
+.font-family-header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4xs);
 }
 
 .font-family-name {

@@ -38,16 +38,20 @@ export function displayFonts(fonts, loadingEl, resultsEl, googleFontsMap = null)
     html += `<div class="font-list">`;
     sortedFamilies.forEach((family) => {
         const familyMap = fontsByFamily.get(family);
-        const googleFontInfo = googleFontsMap?.get(family);
-        const isGoogleFont = googleFontInfo?.found || false;
-        const googleFontLink = googleFontInfo?.link || null;
+        const fontInfo = googleFontsMap?.get(family);
+        const links = fontInfo?.links || {};
+        const googleFontLink = links.googleFont || null;
+        const adobeFontLink = links.adobeFont || null;
 
         html += `<div class="font-group">`;
         html += `<div class="font-family-header">`;
         html += `<div class="font-family-name"><span class="font-family-name-text">[${family}]</span>`;
         html += `<div class="font-family-header-right">`;
-        if (isGoogleFont && googleFontLink) {
+        if (googleFontLink) {
             html += `<a href="${googleFontLink}" target="_blank" rel="noopener noreferrer" class="google-font-badge" title="View on Google Fonts">&nbsp;</a>`;
+        }
+        if (adobeFontLink) {
+            html += `<a href="${adobeFontLink}" target="_blank" rel="noopener noreferrer" class="adobe-font-badge" title="View on Adobe Fonts">&nbsp;</a>`;
         }
         html += `</div>`;
         html += `</div>`;

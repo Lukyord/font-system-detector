@@ -44,9 +44,13 @@ async function checkGoogleFonts(fonts) {
         const fontMap = new Map();
 
         results.forEach((result) => {
+            const links = result.links || {};
             fontMap.set(result.font, {
                 found: result.status === "found",
-                link: result.link || null,
+                links: {
+                    googleFont: links["google-font"] || null,
+                    adobeFont: links["adobe-font"] || null,
+                },
             });
         });
 
