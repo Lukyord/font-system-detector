@@ -94,13 +94,13 @@
             const matchingElements = findElementsWithMatchingFont(fontProps);
             matchingElements.forEach((el) => {
                 el.style.outline = "2px solid #4285f4";
-                el.style.outlineOffset = "2px";
-                el.style.boxShadow = "0 0 0 2px rgba(66, 133, 244, 0.3)";
+                el.style.outlineOffset = "-2px";
+                el.style.boxShadow = "0 0 0 2px rgba(66, 133, 244, 0.3)";            
                 currentlyHighlightedElements.add(el);
             });
         } else {
             element.style.outline = "2px solid #4285f4";
-            element.style.outlineOffset = "2px";
+            element.style.outlineOffset = "-2px";
             element.style.boxShadow = "0 0 0 2px rgba(66, 133, 244, 0.3)";
             currentlyHighlightedElements.add(element);
         }
